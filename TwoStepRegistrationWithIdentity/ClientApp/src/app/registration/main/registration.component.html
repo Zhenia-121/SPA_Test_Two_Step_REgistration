@@ -1,0 +1,21 @@
+<mat-stepper [linear]="true" #stepper *ngIf="!successRegistration && !isLoading">
+  <mat-step label="Password" [stepControl]="firstStepFormGroup">
+    <registration-first-step (stepCompleted)="onFirstStepCompleted($event)"></registration-first-step>
+  </mat-step>
+  <mat-step label="Address">
+    <registration-second-step (stepCompleted)="onSecondStepCompleted($event)"></registration-second-step>
+  </mat-step>
+</mat-stepper>
+<mat-card class="example-card" *ngIf="successRegistration || isLoading">
+  <mat-card-title *ngIf="!isLoading && successRegistration">Success registration</mat-card-title>
+  <mat-card-title *ngIf="isLoading">Registration progress</mat-card-title>
+  <mat-card-content>
+    <p *ngIf="!isLoading && successRegistration">You have been successfully register. Check {{ registerRequest$.value.email }} to confirm email</p>
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+  </mat-card-content>
+  <mat-divider inset></mat-divider>
+  <!-- <mat-card-footer>
+    <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+  </mat-card-footer> -->
+</mat-card>
+
