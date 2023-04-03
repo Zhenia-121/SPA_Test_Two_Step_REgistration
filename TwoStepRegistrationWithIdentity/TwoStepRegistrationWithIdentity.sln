@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TwoStepRegistrationWithIdentity", "TwoStepRegistrationWithIdentity.csproj", "{362982A8-2924-4306-BC4A-2EC4468B6521}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TwoStepRegistrationWithIdentity", "src\WebUI\TwoStepRegistrationWithIdentity.csproj", "{362982A8-2924-4306-BC4A-2EC4468B6521}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{6EFB7A03-ABF6-4D58-BBC3-FADC74ACAC2E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "src\Infrastructure\Infrastructure.csproj", "{6EFB7A03-ABF6-4D58-BBC3-FADC74ACAC2E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{AC7EFCA8-B5D9-44FD-A688-5B84170CFDBD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "src\Domain\Domain.csproj", "{AC7EFCA8-B5D9-44FD-A688-5B84170CFDBD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{E98DFCF2-E836-4ECD-BF5A-A382A93BE162}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "src\Application\Application.csproj", "{E98DFCF2-E836-4ECD-BF5A-A382A93BE162}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

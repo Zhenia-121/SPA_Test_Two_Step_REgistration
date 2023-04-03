@@ -14,9 +14,10 @@ public class CountryEntityTypeConfiguration
         builder.Property(cr => cr.Name).IsRequired();
         builder.Property(cr => cr.Code).IsRequired();
 
-        builder.HasMany<Province>()
+        builder.HasMany(c => c.Provinces)
             .WithOne(p => p.Country)
             .HasForeignKey(p => p.CountryId)
+            .HasPrincipalKey(p => p.Id)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }

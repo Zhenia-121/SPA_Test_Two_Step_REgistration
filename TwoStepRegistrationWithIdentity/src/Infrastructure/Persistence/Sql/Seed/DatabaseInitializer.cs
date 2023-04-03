@@ -82,7 +82,6 @@ namespace Infrastructure.Persistence.Sql.Seed
             DataGenerator.InitBogusData();
 
             await _context.Countries.AddRangeAsync(DataGenerator.Countries);
-            await _context.Provinces.AddRangeAsync(DataGenerator.Provinces);
 
             await _context.SaveChangesAsync();
         }

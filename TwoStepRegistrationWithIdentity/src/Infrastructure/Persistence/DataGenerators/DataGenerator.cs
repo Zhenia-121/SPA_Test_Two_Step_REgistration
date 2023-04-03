@@ -34,7 +34,6 @@ namespace Infrastructure.Persistence.DataGenerators
         private static Faker<Country> GetCountryGenerator()
         {
             return new Faker<Country>()
-                .RuleFor(v => v.Id, f => f.IndexFaker)
                 .RuleFor(v => v.Name, f => f.Address.Country())
                 .RuleFor(v => v.Code, f => f.Address.CountryCode());
         }
@@ -42,7 +41,6 @@ namespace Infrastructure.Persistence.DataGenerators
         private  static Faker<Province> GetProvinceGenerator(int countryId)
         {
             return new Faker<Province>()
-                .RuleFor(v => v.Id, f => f.IndexFaker)
                 .RuleFor(v => v.Name, f => f.Address.City())
                 .RuleFor(v => v.CountryId, _ => countryId);
         }
