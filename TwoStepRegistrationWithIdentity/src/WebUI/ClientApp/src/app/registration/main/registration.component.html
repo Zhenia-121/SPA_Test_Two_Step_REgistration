@@ -1,4 +1,4 @@
-<mat-stepper [linear]="true" #stepper *ngIf="!successRegistration && !isLoading">
+<mat-stepper [linear]="true" #stepper *ngIf="showRegistration && !isLoading">
   <mat-step label="Password" [stepControl]="firstStepFormGroup">
     <registration-first-step (stepCompleted)="onFirstStepCompleted($event)"></registration-first-step>
   </mat-step>
@@ -6,16 +6,18 @@
     <registration-second-step (stepCompleted)="onSecondStepCompleted($event)"></registration-second-step>
   </mat-step>
 </mat-stepper>
-<mat-card class="example-card" *ngIf="successRegistration || isLoading">
+<mat-card class="example-card" *ngIf="!showRegistration || isLoading">
   <mat-card-title *ngIf="!isLoading && successRegistration">Success registration</mat-card-title>
+  <mat-card-title *ngIf="!isLoading && !successRegistration">Failed to register</mat-card-title>
   <mat-card-title *ngIf="isLoading">Registration progress</mat-card-title>
   <mat-card-content>
+    <mat-spinner *ngIf="isLoading" ></mat-spinner>
     <p *ngIf="!isLoading && successRegistration">You have been successfully register. Check {{ registerRequest$.value.email }} to confirm email</p>
-    <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <p *ngIf="!isLoading && !successRegistration">Error details: {{ errors.value }}</p>
   </mat-card-content>
   <mat-divider inset></mat-divider>
-  <!-- <mat-card-footer>
-    <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
-  </mat-card-footer> -->
+  <mat-card-actions>
+    <button *ngIf="!successRegistration && !isLoading" mat-button (click)="onShowRegistrationClicked()">Return to registration</button>
+  </mat-card-actions>
 </mat-card>
 

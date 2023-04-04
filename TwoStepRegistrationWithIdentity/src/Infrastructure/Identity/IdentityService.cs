@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Application.Common.Interfaces;
+using Application.Common.Models;
+using Application.Users.Commands.Register;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Identity;
@@ -13,17 +16,11 @@ public class IdentityService : IIdentityService
         _userManager = userManager;
     }
 
-    public async Task<(Result Result, string UserId)> CreateUserAsync(string userName, string password)
+    public async Task<string?> GetUserNameAsync(string userId)
     {
-        var user = new ApplicationUser
-        {
-            UserName = userName,
-            Email = userName,
-        };
+        var user = await _userManager.Users.FirstAsync(u => u.Id == userId);
 
-        var result = await _userManager.CreateAsync(user, password);
-
-        return (result.ToApplicationResult(), user.Id);
+        return user.UserName;
     }
 
     public Task<bool> IsUserLoginTakenAsync(string login)
@@ -42,5 +39,20 @@ public class IdentityService : IIdentityService
         var result = await _userManager.CreateAsync(user, password);
 
         return (result.ToApplicationResult(), user.Id);
+    }
+
+    public async Task<(Result Result, string UserId)> RegisterAsync(RegisterUserCommand user)
+    {
+        var applicationUser = new ApplicationUser
+        {
+            UserName = user.Email,
+            Email = user.Email,
+            ServiceAgreementAccepted = user.IsAgreementAccepted,
+            ProvinceId = user.ProvinceId
+        };
+
+        var result = await _userManager.CreateAsync(applicationUser, user.Password);
+
+        return (result.ToApplicationResult(), applicationUser.Id);
     }
 }

@@ -1,4 +1,6 @@
-﻿using Infrastructure.Identity;
+﻿using Application.Common.Configurations;
+using Application.Common.Interfaces;
+using Infrastructure.Identity;
 using Infrastructure.Persistence.Sql.Contexts;
 using Infrastructure.Persistence.Sql.Interceptors;
 using Infrastructure.Persistence.Sql.Seed;
@@ -32,11 +34,21 @@ public static class ConfigureServices
                     builder => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
         }
 
-        services.AddScoped<ApplicationDbContext>();
+        services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
         services.AddScoped<DatabaseInitializer>();
 
+        services.Configure<PasswordRequirements>(configuration.GetSection(nameof(PasswordRequirements)));
+
+        var passwordRequirements = configuration.GetSection(nameof(PasswordRequirements)).Get<PasswordRequirements>();
+
         services
-            .AddDefaultIdentity<ApplicationUser>()
+            .AddDefaultIdentity<ApplicationUser>(options => {
+                options.Password.RequireDigit = passwordRequirements.RequireDigit;
+                options.Password.RequiredLength = passwordRequirements.RequiredLength;
+                options.Password.RequireNonAlphanumeric = passwordRequirements.RequireNonAlphanumeric;
+                options.Password.RequireUppercase = passwordRequirements.RequireUppercase;
+                options.Password.RequireLowercase = passwordRequirements.RequireLowercase;
+            })
             .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
 

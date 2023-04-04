@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { matchValidator } from 'src/app/validators/confirmPasswordValidator';
-import { RegisterRequest } from 'src/models/register-request';
+import { UserRegisterRequest } from 'src/models/register-request';
 
 @Component({
   selector: 'registration-first-step',
@@ -9,7 +9,7 @@ import { RegisterRequest } from 'src/models/register-request';
   styleUrls: ['./registration-first-step.component.scss']
 })
 export class RegistrationFirstStepComponent implements OnInit {
-  @Output() stepCompleted = new EventEmitter<Partial<RegisterRequest>>();
+  @Output() stepCompleted = new EventEmitter<Partial<UserRegisterRequest>>();
 
   passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{2,}$/gm;
   hidePassword = true;

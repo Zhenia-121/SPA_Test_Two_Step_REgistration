@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using Application.Common.Interfaces;
 using Domain.Entities;
 using Duende.IdentityServer.EntityFramework.Options;
 using Infrastructure.Identity;
@@ -10,7 +11,7 @@ using Microsoft.Extensions.Options;
 
 namespace Infrastructure.Persistence.Sql.Contexts
 {
-    public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
+    public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>, IApplicationDbContext
     {
         private readonly IMediator _mediator;
         private readonly AuditableEntitySaveChangesInterceptor _auditableEntitySaveChangesInterceptor;

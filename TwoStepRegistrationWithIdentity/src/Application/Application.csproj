@@ -7,12 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Country\" />
-    <Folder Include="User\Commands\RegisterUserCommand\" />
-    <Folder Include="User\Queries\" />
+    <Compile Remove="Country\**" />
+    <Compile Remove="User\**" />
+    <EmbeddedResource Remove="Country\**" />
+    <EmbeddedResource Remove="User\**" />
+    <None Remove="Country\**" />
+    <None Remove="User\**" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.5.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.4" />
   </ItemGroup>
 

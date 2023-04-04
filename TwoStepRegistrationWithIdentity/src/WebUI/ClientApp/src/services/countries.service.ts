@@ -1,44 +1,27 @@
 import { Inject, Injectable } from '@angular/core';
 import { ApiBaseService } from './api-base.service';
 import { HttpClient } from '@angular/common/http';
-import { Observable, delay, of } from 'rxjs';
+import { Observable, catchError, delay, of } from 'rxjs';
 import { Country, Province } from 'src/models/country';
+import { AppConfigService } from 'src/config/app-config.service';
 
 @Injectable()
 export class CountriesService extends ApiBaseService {
-  baseRoute: string = 'countries';
+  baseRoute: string = 'Countries';
 
-  private fakeCountries: Country[] = [
-    { name: 'Unitied States', id: 1, code: 'USA' },
-    { name: 'Unitied Kingdom', id: 2, code: 'UK' },
-  ]
-
-  private fakeProvinces: Province[] = [
-    { name: 'USA Province 1', id: 1, countryId: 1 },
-    { name: 'USA Province 2', id: 2, countryId: 1 },
-    { name: 'UK Province 1', id: 3, countryId: 2 },
-    { name: 'UK Province 2', id: 4, countryId: 2 },
-  ]
-
-  constructor(private http: HttpClient, @Inject('BASE_URL') private baseUrl: string) {
+  constructor(private http: HttpClient, private config: AppConfigService) {
     super();
   }
 
   public getAllCountries(): Observable<Country[]> {
-
-    return of(this.fakeCountries).pipe(delay(100));
-
-    // return this.http.get<Country[]>(`${this.baseUrl}/${this.baseRoute}`).pipe(
-    //   catchError((error) => this.handleError(error))
-    // );
+    return this.http.get<Country[]>(`${this.config.apiUrl}/${this.baseRoute}`).pipe(
+      catchError((error) => this.handleError(error))
+    );
   }
 
   public getCountryProvinces(countryId: number): Observable<Province[]> {
-
-    return of(this.fakeProvinces.filter(p => p.countryId === countryId)).pipe(delay(100));
-
-    // return this.http.get<Country[]>(`${this.baseUrl}/${this.baseRoute}/${countryId}/provinces/`).pipe(
-    //   catchError((error) => this.handleError(error))
-    // );
+    return this.http.get<Province[]>(`${this.config.apiUrl}/${this.baseRoute}/${countryId}/Provinces`).pipe(
+      catchError((error) => this.handleError(error))
+    );
   }
 }

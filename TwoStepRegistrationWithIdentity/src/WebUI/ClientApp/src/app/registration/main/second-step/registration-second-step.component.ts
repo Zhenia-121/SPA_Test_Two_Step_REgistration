@@ -4,7 +4,7 @@ import { MatSelectChange } from '@angular/material/select';
 import { BehaviorSubject, Observable, filter, switchMap, tap } from 'rxjs';
 import { Province } from 'src/models/country';
 import { Country } from 'src/models/country';
-import { RegisterRequest } from 'src/models/register-request';
+import { UserRegisterRequest } from 'src/models/register-request';
 import { CountriesService } from 'src/services/countries.service';
 
 @Component({
@@ -14,13 +14,14 @@ import { CountriesService } from 'src/services/countries.service';
   providers: [CountriesService]
 })
 export class RegistrationSecondStepComponent implements OnInit {
-  @Output() stepCompleted = new EventEmitter<Partial<RegisterRequest>>();
+  @Output() stepCompleted = new EventEmitter<Partial<UserRegisterRequest>>();
 
   countries$!: Observable<Country[]>;
   provinces$!: Observable<Province[]>;
 
   selectContryControl = new FormControl<number | null>(null, Validators.required);
   selectProvinceControl = new FormControl<number | null>({value: null, disabled: true }, Validators.required);
+  isProvincesLoading = false;
 
   constructor(private countriesService: CountriesService) {
   }
@@ -31,12 +32,13 @@ export class RegistrationSecondStepComponent implements OnInit {
     .pipe(
       filter((countryId): countryId is number => !!countryId),
       tap(() => {
+        this.isProvincesLoading = true;
         if (this.selectProvinceControl.disabled) {
           this.selectProvinceControl.enable();
         }
         this.selectProvinceControl.setValue(null);
       }),
-      switchMap((countryId) => this.countriesService.getCountryProvinces(countryId)));
+      switchMap((countryId) => this.countriesService.getCountryProvinces(countryId).pipe((tap(() => this.isProvincesLoading = false)))));
   }
 
   onSubmit(): void {

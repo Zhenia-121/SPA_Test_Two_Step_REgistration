@@ -1,11 +1,11 @@
 import { Injectable } from "@angular/core";
 import { AbstractControl, AsyncValidator, ValidationErrors } from "@angular/forms";
 import { Observable, catchError, map, of } from "rxjs";
-import { AccountsService } from "src/services/accounts.service";
+import { UsersService } from "src/services/users.service";
 
 @Injectable({ providedIn: 'root' })
 export class UniqueLoginValidator implements AsyncValidator {
-  constructor(private accountsService: AccountsService) {}
+  constructor(private accountsService: UsersService) {}
 
   validate(
     control: AbstractControl
