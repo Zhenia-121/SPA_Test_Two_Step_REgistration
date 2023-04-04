@@ -1,1 +1,1 @@
-# SPA_Test_Two_Step_REgistration
+# SPA_Test_Two_Step_Registration
